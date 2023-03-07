@@ -12,7 +12,7 @@ const currentSlice = ref([])
 //gets the index of the last page
 const indexOfLastPage = currentPage.value * reposPerPage.value
 //gets the index of the second page
-const indexOfFirstPage = indexOfLastPage.value - reposPerPage.value
+const indexOfFirstPage = indexOfLastPage - reposPerPage.value
 
 onMounted(async () => {
   const res = await fetch('https://api.github.com/users/alvinokafor/repos')
@@ -35,7 +35,11 @@ onMounted(async () => {
 
     <RepoItem v-for="(repo, index) in currentSlice" :key="repo.id" :repo="repo" :index="index" />
 
-    <RepoPagination />
+    <RepoPagination
+      :reposPerPage="reposPerPage"
+      :totalRepos="repositories.length"
+      :currentPage="currentPage"
+    />
   </section>
 </template>
 

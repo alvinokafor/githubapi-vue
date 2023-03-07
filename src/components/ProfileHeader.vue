@@ -1,13 +1,28 @@
+<script setup>
+import { toRefs } from 'vue'
+import { RouterLink } from 'vue-router'
+
+const props = defineProps({
+  bio: String,
+  name: String,
+  username: String
+})
+
+const { bio, name, username } = toRefs(props)
+</script>
+
 <template>
   <header>
     <div className="user-bio">
-      <h2>Alvin Okafor</h2>
-      <p>@retro</p>
-      <p>Frontend Engineer, UX Engineer</p>
+      <h2>{{ name }}</h2>
+      <p>@{{ username }}</p>
+      <p>{{ bio }}</p>
     </div>
 
     <div>
-      <button className="view-repo">View Repositories</button>
+      <RouterLink to="/repo-list">
+        <button className="view-repo">View Repositories</button>
+      </RouterLink>
     </div>
   </header>
 </template>

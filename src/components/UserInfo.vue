@@ -1,15 +1,27 @@
+<script setup>
+import { toRefs } from 'vue'
+
+const props = defineProps({
+  location: String,
+  url: String,
+  twitter: String
+})
+
+const { location, url, twitter } = toRefs(props)
+</script>
+
 <template>
   <section class="user-info flex">
     <div class="info-div">
       <div class="location">
         <i class="fa-solid fa-location-dot location-icon"></i>
-        <span>Nigeria</span>
+        <span>{{ location }}</span>
       </div>
 
       <div class="github">
         <i class="fa-solid fa-link"></i>
         <span>
-          <a href="#">Github profile</a>
+          <a :href="url">Github profile</a>
         </span>
       </div>
     </div>
@@ -17,13 +29,15 @@
     <div class="info-div">
       <div class="twitter">
         <i class="fa-brands fa-twitter"></i>
-        <a href="https:/twitter.com/"><span>@retro</span></a>
+        <a :href="`https://twitter.com/${twitter}`"
+          ><span>@{{ twitter }}</span></a
+        >
       </div>
 
-      <div class="company">
+      <!-- <div class="company">
         <i class="fa-solid fa-building"></i>
         <span>Not available</span>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>

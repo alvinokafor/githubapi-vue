@@ -1,21 +1,42 @@
 <script setup>
+import { onMounted, ref } from 'vue'
+
 import UserImage from '../components/UserImage.vue'
 import ProfileHeader from '../components/ProfileHeader.vue'
 import UserInfo from '../components/UserInfo.vue'
 import AccountInfo from '../components/AccountInfo.vue'
+
+const profile = ref('')
+
+onMounted(async () => {
+  const res = await fetch('https://api.github.com/users/alvinokafor')
+  const result = await res.json()
+  profile.value = result
+  // console.log(profile.value)
+})
+
+// console.log(profile.value)
 </script>
 
 <template>
   <main>
     <section class="homeContainer flex">
       <div>
-        <UserImage />
+        <UserImage :img="profile.avatar_url" />
       </div>
 
       <div class="content">
-        <ProfileHeader />
-        <AccountInfo />
-        <UserInfo />
+        <ProfileHeader :bio="profile.bio" :name="profile.name" :username="profile.login" />
+        <AccountInfo
+          :followers="profile.followers"
+          :following="profile.following"
+          :repos="profile.public_repos"
+        />
+        <UserInfo
+          :location="profile.location"
+          :url="profile.html_url"
+          :twitter="profile.twitter_username"
+        />
       </div>
     </section>
   </main>

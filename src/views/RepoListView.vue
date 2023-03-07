@@ -1,6 +1,26 @@
 <script setup>
+import { onMounted, ref } from 'vue'
+
 import RepoItem from '../components/RepoItem.vue'
 import RepoPagination from '../components/RepoPagination.vue'
+
+const repositories = ref([])
+const currentPage = ref(1)
+const reposPerPage = ref(5)
+const currentSlice = ref([])
+
+//gets the index of the last page
+const indexOfLastPage = currentPage.value * reposPerPage.value
+//gets the index of the second page
+const indexOfFirstPage = indexOfLastPage.value - reposPerPage.value
+
+onMounted(async () => {
+  const res = await fetch('https://api.github.com/users/alvinokafor/repos')
+  const result = await res.json()
+  repositories.value = result
+  currentSlice.value = repositories.value.slice(indexOfFirstPage, indexOfLastPage)
+  console.log(repositories.value)
+})
 </script>
 
 <template>
@@ -13,10 +33,7 @@ import RepoPagination from '../components/RepoPagination.vue'
       <h3>Respositories</h3>
     </div>
 
-    <RepoItem />
-    <RepoItem />
-    <RepoItem />
-    <RepoItem />
+    <RepoItem v-for="(repo, index) in currentSlice" :key="repo.id" :repo="repo" :index="index" />
 
     <RepoPagination />
   </section>

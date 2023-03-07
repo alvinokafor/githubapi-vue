@@ -1,6 +1,16 @@
+<script setup>
+import { toRefs } from 'vue'
+
+const props = defineProps({
+  img: String
+})
+
+const { img } = toRefs(props)
+</script>
+
 <template>
   <div className="user-img">
-    <img src="https://avatars.githubusercontent.com/u/60660504?v=4" alt="user profile" />
+    <img :src="img" alt="user profile" />
   </div>
 </template>
 

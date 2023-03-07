@@ -1,18 +1,30 @@
+<script setup>
+import { toRefs } from 'vue'
+
+const props = defineProps({
+  followers: Number,
+  following: Number,
+  repos: Number
+})
+
+const { followers, following, repos } = toRefs(props)
+</script>
+
 <template>
   <section class="account-info">
     <div class="repo">
       <p>Repositories</p>
-      <p>39</p>
+      <p>{{ repos }}</p>
     </div>
 
     <div class="followers">
       <p>Followers</p>
-      <p>15</p>
+      <p>{{ followers }}</p>
     </div>
 
     <div class="following">
       <p>Following</p>
-      <p>8</p>
+      <p>{{ following }}</p>
     </div>
   </section>
 </template>

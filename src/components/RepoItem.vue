@@ -1,10 +1,21 @@
+<script setup>
+import { toRefs } from 'vue'
+
+const props = defineProps({
+  repo: Object,
+  index: Number
+})
+
+const { repo, index } = toRefs(props)
+</script>
+
 <template>
   <div className="repo-card flex">
-    <h5>1</h5>
-    <p id="repoTitle">Repo Title</p>
+    <h5>{{ index + 1 }}</h5>
+    <p id="repoTitle">{{ repo.name }}</p>
     <div className="repo-link flex" id="repoURL">
       <i className="fa-solid fa-link"></i>
-      <p>Repo Link</p>
+      <p>{{ repo.html_url }}</p>
     </div>
   </div>
 </template>

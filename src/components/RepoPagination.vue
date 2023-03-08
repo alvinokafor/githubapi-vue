@@ -1,37 +1,35 @@
 <script setup>
-import { toRefs, ref } from 'vue'
+import { toRefs } from 'vue'
 
 const props = defineProps({
-  reposPerPage: Number,
-  totalRepos: Number,
-  currentPage: Number
+  pageNumbers: Array
 })
 
-const { reposPerPage, totalRepos } = toRefs(props)
-const pageNumbers = ref([])
+const { pageNumbers } = toRefs(props)
 
-//gets the maximum amount of buttons to be displayed
-const buttonLimit = Math.ceil(totalRepos.value / reposPerPage.value)
+const emit = defineEmits(['nextPage', 'prevPage', 'pageJump'])
+const handleNext = () => {
+  emit('nextPage')
+}
 
-//pushes a number sequntially to the pageNumbers array for each instance i is less the btn limit
-for (let i = 1; i <= buttonLimit; i++) {
-  pageNumbers.value.push(i)
+const handlePrev = () => {
+  emit('prevPage')
+}
+
+const handlePageJump = (btnNum) => {
+  emit('pageJump', btnNum)
 }
 </script>
->
 
 <template>
   <div class="pagination">
-    <button>Prev</button>
+    <button @click="handlePrev()">Prev</button>
 
-    <button v-for="btnNum in pageNumbers" :key="btnNum">{{ btnNum }}</button>
-    <!-- 
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button> -->
+    <button @click="handlePageJump(btnNum)" v-for="btnNum in pageNumbers" :key="btnNum">
+      {{ btnNum }}
+    </button>
 
-    <button>Next</button>
+    <button @click="handleNext()">Next</button>
   </div>
 </template>
 

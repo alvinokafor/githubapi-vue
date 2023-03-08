@@ -8,6 +8,8 @@ const repositories = ref([])
 const currentPage = ref(1)
 const reposPerPage = ref(5)
 const currentSlice = ref([])
+const pageNumbers = ref([])
+const buttonLimit = ref(0)
 
 //gets the index of the last page
 const indexOfLastPage = currentPage.value * reposPerPage.value
@@ -15,12 +17,35 @@ const indexOfLastPage = currentPage.value * reposPerPage.value
 const indexOfFirstPage = indexOfLastPage - reposPerPage.value
 
 onMounted(async () => {
-  const res = await fetch('https://api.github.com/users/alvinokafor/repos')
-  const result = await res.json()
-  repositories.value = result
-  currentSlice.value = repositories.value.slice(indexOfFirstPage, indexOfLastPage)
-  console.log(repositories.value)
+  try {
+    const res = await fetch('https://api.github.com/users/alvinokafor/repos')
+    const result = await res.json()
+    repositories.value = result
+    currentSlice.value = repositories.value.slice(indexOfFirstPage, indexOfLastPage)
+    buttonLimit.value = Math.ceil(repositories.value.length / reposPerPage.value)
+
+    for (let i = 1; i <= buttonLimit.value; i++) {
+      pageNumbers.value.push(i)
+    }
+  } catch (err) {
+    console.log(err)
+  }
 })
+
+function nextPage() {
+  currentPage.value++
+  console.log(currentPage.value)
+}
+
+function prevPage() {
+  currentPage.value--
+  console.log(currentPage.value)
+}
+
+const goToPage = (btnNum) => {
+  currentPage.value = btnNum
+  console.log(currentPage.value)
+}
 </script>
 
 <template>
@@ -33,12 +58,19 @@ onMounted(async () => {
       <h3>Respositories</h3>
     </div>
 
-    <RepoItem v-for="(repo, index) in currentSlice" :key="repo.id" :repo="repo" :index="index" />
+    <RepoItem
+      v-for="(repo, index) in currentSlice"
+      :key="repo.id"
+      :repo="repo"
+      :index="index"
+      :currentPage="currentPage"
+    />
 
     <RepoPagination
-      :reposPerPage="reposPerPage"
-      :totalRepos="repositories.length"
-      :currentPage="currentPage"
+      @page-jump="goToPage"
+      @next-page="nextPage()"
+      @prev-page="prevPage()"
+      :pageNumbers="pageNumbers"
     />
   </section>
 </template>

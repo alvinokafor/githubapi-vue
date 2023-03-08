@@ -3,15 +3,16 @@ import { toRefs } from 'vue'
 
 const props = defineProps({
   repo: Object,
-  index: Number
+  index: Number,
+  currentPage: Number
 })
 
-const { repo, index } = toRefs(props)
+const { repo, index, currentPage } = toRefs(props)
 </script>
 
 <template>
   <div className="repo-card flex">
-    <h5>{{ index + 1 }}</h5>
+    <h5>{{ (currentPage - 1) * 5 + index + 1 }}</h5>
     <p id="repoTitle">{{ repo.name }}</p>
     <div className="repo-link flex" id="repoURL">
       <i className="fa-solid fa-link"></i>

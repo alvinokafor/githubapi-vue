@@ -5,22 +5,27 @@ import UserImage from '../components/UserImage.vue'
 import ProfileHeader from '../components/ProfileHeader.vue'
 import UserInfo from '../components/UserInfo.vue'
 import AccountInfo from '../components/AccountInfo.vue'
+import AvatarLoader from '../components/loader/AvatarLoader.vue'
+import HomeLoader from '../components/loader/HomeLoader.vue'
 
-const profile = ref('')
+const profile = ref([])
+const isLoading = ref(true)
 
 onMounted(async () => {
-  const res = await fetch('https://api.github.com/users/alvinokafor')
-  const result = await res.json()
-  profile.value = result
-  // console.log(profile.value)
+  try {
+    const res = await fetch('https://api.github.com/users/alvinokafor')
+    const result = await res.json()
+    profile.value = result
+    isLoading.value = false
+  } catch (err) {
+    console.log(err)
+  }
 })
-
-// console.log(profile.value)
 </script>
 
 <template>
   <main>
-    <section class="homeContainer flex">
+    <section v-if="!isLoading" class="homeContainer flex">
       <div>
         <UserImage :img="profile.avatar_url" />
       </div>
@@ -37,6 +42,18 @@ onMounted(async () => {
           :url="profile.html_url"
           :twitter="profile.twitter_username"
         />
+      </div>
+    </section>
+
+    <section v-if="isLoading" class="homeContainer flex">
+      <div>
+        <AvatarLoader />
+      </div>
+
+      <div class="content">
+        <HomeLoader />
+        <HomeLoader />
+        <HomeLoader />
       </div>
     </section>
   </main>

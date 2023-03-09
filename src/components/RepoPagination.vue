@@ -2,12 +2,14 @@
 import { toRefs } from 'vue'
 
 const props = defineProps({
-  pageNumbers: Array
+  pageNumbers: Array,
+  currentPage: Number
 })
 
-const { pageNumbers } = toRefs(props)
+const { pageNumbers, currentPage } = toRefs(props)
 
 const emit = defineEmits(['nextPage', 'prevPage', 'pageJump'])
+
 const handleNext = () => {
   emit('nextPage')
 }
@@ -23,13 +25,30 @@ const handlePageJump = (btnNum) => {
 
 <template>
   <div class="pagination">
-    <button @click="handlePrev()">Prev</button>
+    <button
+      :id="currentPage <= 1 ? 'btn-disabled' : null"
+      :disabled="currentPage <= 1"
+      @click="handlePrev()"
+    >
+      Prev
+    </button>
 
-    <button @click="handlePageJump(btnNum)" v-for="btnNum in pageNumbers" :key="btnNum">
+    <button
+      :id="btnNum === currentPage ? 'btn-active' : null"
+      @click="handlePageJump(btnNum)"
+      v-for="btnNum in pageNumbers"
+      :key="btnNum"
+    >
       {{ btnNum }}
     </button>
 
-    <button @click="handleNext()">Next</button>
+    <button
+      :id="currentPage === 6 ? 'btn-disabled' : null"
+      :disabled="currentPage === 6"
+      @click="handleNext()"
+    >
+      Next
+    </button>
   </div>
 </template>
 
@@ -72,7 +91,6 @@ const handlePageJump = (btnNum) => {
 }
 
 #btn-disabled {
-  width: 126px;
   /* margin-right: 20px; */
   background-color: var(--grey);
 }

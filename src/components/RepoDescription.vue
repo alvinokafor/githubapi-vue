@@ -1,7 +1,17 @@
+<script setup>
+import { toRefs } from 'vue'
+const props = defineProps({
+  description: String
+})
+
+const { description } = toRefs(props)
+</script>
+
 <template>
   <div className="repo-desc">
     <h2>Description</h2>
-    <p>Repo Description</p>
+    <p v-if="description">{{ description }}</p>
+    <p v-else>No Description for this repository</p>
   </div>
 </template>
 

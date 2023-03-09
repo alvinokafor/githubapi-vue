@@ -1,5 +1,6 @@
 <script setup>
 import { toRefs } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   repo: Object,
@@ -11,14 +12,16 @@ const { repo, index, currentPage } = toRefs(props)
 </script>
 
 <template>
-  <div className="repo-card flex">
-    <h5>{{ (currentPage - 1) * 5 + index + 1 }}</h5>
-    <p id="repoTitle">{{ repo.name }}</p>
-    <div className="repo-link flex" id="repoURL">
-      <i className="fa-solid fa-link"></i>
-      <p>{{ repo.html_url }}</p>
+  <RouterLink :to="`/repositories/${repo.name}`">
+    <div className="repo-card flex">
+      <h5>{{ (currentPage - 1) * 5 + index + 1 }}</h5>
+      <p id="repoTitle">{{ repo?.name }}</p>
+      <div className="repo-link flex" id="repoURL">
+        <i className="fa-solid fa-link"></i>
+        <p>{{ repo?.html_url }}</p>
+      </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped>

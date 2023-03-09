@@ -20,7 +20,7 @@ const { bio, name, username } = toRefs(props)
     </div>
 
     <div>
-      <RouterLink to="/repo-list">
+      <RouterLink to="/repositories">
         <button className="view-repo">View Repositories</button>
       </RouterLink>
     </div>

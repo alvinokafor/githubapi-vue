@@ -1,28 +1,70 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute, RouterLink } from 'vue-router'
+
 import RepoDescription from '../components/RepoDescription.vue'
 import RepoMetrics from '../components/RepoMetrics.vue'
 import RepoInfo from '../components/RepoInfo.vue'
+
+const repo = ref([])
+const isLoading = ref(true)
+const route = useRoute()
+
+onMounted(async () => {
+  try {
+    const res = await fetch(`https://api.github.com/repos/alvinokafor/${route.params.id}`)
+    const result = await res.json()
+    repo.value = result
+    isLoading.value = false
+  } catch (err) {
+    console.log(err)
+  }
+})
 </script>
 
 <template>
   <section className="single-repo">
     <div className="repo-header">
-      <div className="back-btn flex">
-        <i className="fa-solid fa-arrow-left"></i>
-        <p>Back</p>
-      </div>
-      <h3>Repo Name</h3>
+      <RouterLink to="/repositories">
+        <div className="back-btn flex">
+          <i className="fa-solid fa-arrow-left"></i>
+          <p>Back</p>
+        </div>
+      </RouterLink>
+      <h3>{{ repo?.name }}</h3>
     </div>
 
     <div className="single-repo-info">
-      <RepoDescription />
-      <RepoMetrics />
-      <RepoInfo />
+      <RepoDescription :description="repo?.description" />
+      <RepoMetrics
+        :forks="repo?.forks"
+        :watchers="repo?.watchers"
+        :open_issues="repo?.open_issues"
+      />
+      <RepoInfo
+        :owner="repo?.owner?.login"
+        :owner_url="repo?.owner?.html_url"
+        :language="repo?.language"
+        :license="repo?.license?.name"
+        :repo_url="repo?.html_url"
+      />
     </div>
   </section>
 </template>
 
 <style scoped>
+.back-btn {
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.back-btn i {
+  margin-right: 10px;
+}
+
+.back-btn p {
+  font-size: 1.125rem;
+}
 .single-repo {
   max-width: 1024px;
   margin-inline: auto;

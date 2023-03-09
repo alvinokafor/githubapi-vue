@@ -12,13 +12,14 @@ const profile = ref([])
 const isLoading = ref(true)
 
 onMounted(async () => {
+  let result
   try {
     const res = await fetch('https://api.github.com/users/alvinokafor')
-    const result = await res.json()
+    result = await res.json()
     profile.value = result
     isLoading.value = false
   } catch (err) {
-    console.log(err)
+    throw new Error('Error:' + err)
   }
 })
 </script>

@@ -38,7 +38,7 @@ onMounted(async () => {
     }
     isLoading.value = false
   } catch (err) {
-    console.log(err)
+    throw new Error('Error:' + err)
   }
 })
 

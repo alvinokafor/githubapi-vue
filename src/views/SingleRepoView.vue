@@ -5,6 +5,7 @@ import { useRoute, RouterLink } from 'vue-router'
 import RepoDescription from '../components/RepoDescription.vue'
 import RepoMetrics from '../components/RepoMetrics.vue'
 import RepoInfo from '../components/RepoInfo.vue'
+import HomeLoader from '../components/loader/HomeLoader.vue'
 
 const repo = ref([])
 const isLoading = ref(true)
@@ -17,24 +18,24 @@ onMounted(async () => {
     repo.value = result
     isLoading.value = false
   } catch (err) {
-    console.log(err)
+    throw new Error('Error:' + err)
   }
 })
 </script>
 
 <template>
-  <section className="single-repo">
-    <div className="repo-header">
+  <section class="single-repo">
+    <div class="repo-header">
       <RouterLink to="/repositories">
-        <div className="back-btn flex">
-          <i className="fa-solid fa-arrow-left"></i>
+        <div class="back-btn flex">
+          <i class="fa-solid fa-arrow-left"></i>
           <p>Back</p>
         </div>
       </RouterLink>
       <h3>{{ repo?.name }}</h3>
     </div>
 
-    <div className="single-repo-info">
+    <div v-if="!isLoading" class="single-repo-info">
       <RepoDescription :description="repo?.description" />
       <RepoMetrics
         :forks="repo?.forks"
@@ -48,6 +49,10 @@ onMounted(async () => {
         :license="repo?.license?.name"
         :repo_url="repo?.html_url"
       />
+    </div>
+
+    <div v-else class="single-repo-info">
+      <HomeLoader v-for="n in 3" :key="n" />
     </div>
   </section>
 </template>

@@ -1,5 +1,6 @@
 <script setup>
 import { toRefs } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   followers: Number,
@@ -12,10 +13,12 @@ const { followers, following, repos } = toRefs(props)
 
 <template>
   <section class="account-info">
-    <div class="repo">
-      <p>Repositories</p>
-      <p>{{ repos }}</p>
-    </div>
+    <RouterLink to="/repositories">
+      <div class="repo">
+        <p>Repositories</p>
+        <p>{{ repos }}</p>
+      </div>
+    </RouterLink>
 
     <div class="followers">
       <p>Followers</p>

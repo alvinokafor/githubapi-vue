@@ -14,10 +14,10 @@ const { owner, owner_url, language, license, repo_url } = toRefs(props)
 <template>
   <section class="repo-info">
     <p>
-      <a :href="owner_url"> <span>Owner:</span>{{ owner }}</a>
+      <a :href="owner_url"> <span>Owner: </span>@{{ owner }}</a>
     </p>
-    <p><span>Language:</span>{{ language }}</p>
-    <p v-if="license"><span>Licence:</span> {{ license }}</p>
+    <p><span>Language: </span>{{ language }}</p>
+    <p v-if="license"><span>Licence: </span> {{ license }}</p>
     <p v-else class="not-available">No licence available for this repository</p>
     <div class="repo-link flex repo-info-div">
       <i class="fa-solid fa-link"></i>

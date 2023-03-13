@@ -32,7 +32,7 @@ You may also see any lint errors in the console.
 
 The website contains three pages: Home, Repositories and Repository Details
 
-* Home Page: Here you are able to see informatio about the user
+* Home Page: Here you are able to see information about the user
 
 * Repositories Page: On this page you can see the entire list of the users repositories
   

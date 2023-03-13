@@ -1,35 +1,39 @@
-# githubapi-vue
+# AltSchool Third Semester Exam Project
 
-This template should help get you started developing with Vue 3 in Vite.
+## Project Question
 
-## Recommended IDE Setup
+Create a new vue js application then using the GitHub API, fetch your GitHub repositories using this endpoint <https://api.github.com/users/{{USERNAME}}/repos>. show a page with a list of all your repositories on GitHub(the page should have some form of pagination). Then create another page showing data for a single repo clicked from the list of repos using nested routes. Make sure to implement a wildcard route to catch 404 pages. NB: Good UI and Designs are important.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[Website Link](https://githubapi-vue.vercel.app)
 
-## Customize configuration
+## Setup Instructions
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+To run the project locally on your machine, in the project directory, you can:
 
-## Project Setup
+Clone the project by running:
 
-```sh
-yarn
-```
+### `git clone`
 
-### Compile and Hot-Reload for Development
+To install dependencies, cd into the project directory and run:
 
-```sh
-yarn dev
-```
+### `yarn`
 
-### Compile and Minify for Production
+To start the development server, run:
 
-```sh
-yarn build
-```
+### `yarn run dev`
 
-### Lint with [ESLint](https://eslint.org/)
+Runs the app in the development mode.\
+Open [http://localhost:your-given-port](http://localhost:your-given-port) to view it in your browser.
 
-```sh
-yarn lint
-```
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+## Project overview
+
+The website contains three pages: Home, Repositories and Repository Details
+
+* Home Page: Here you are able to see informatio about the user
+
+* Repositories Page: On this page you can see the entire list of the users repositories
+  
+* Repository Details Page: On this page you can view the details of a particular repository clicked on
